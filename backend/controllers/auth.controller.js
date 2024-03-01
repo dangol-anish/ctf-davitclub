@@ -34,7 +34,7 @@ const signup = async (req, res) => {
             if (err) {
               return res
                 .status(500)
-                .json({ error: "Error while inserting data to database." });
+                .json({ error: "Enter valid credentials." });
             }
 
             console.log("Insert ID: " + insertUserResult.insertId);
@@ -63,7 +63,7 @@ const signin = async (req, res) => {
             .json({ error: "You don't have an existing account" });
         }
         if (existingUser.length === 0) {
-          return res.status(404).json({ error: "User not found" });
+          return res.status(404).json({ error: "Invalid Credentials" });
         }
 
         const validPassword = bcryptjs.compareSync(
@@ -72,7 +72,7 @@ const signin = async (req, res) => {
         );
 
         if (!validPassword) {
-          return res.status(401).json({ error: "Invalid password" });
+          return res.status(401).json({ error: "Invalid Credentials" });
         }
 
         const aT = jwt.sign(
