@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const dashboard = require("../controllers/dashboard.controller.js");
+const {
+  sendQuestion,
+  checkAnswer,
+} = require("../controllers/dashboard.controller.js");
 
-router.get("/", dashboard);
-
+router.get("/", sendQuestion);
+router.post("/", checkAnswer);
 module.exports = router;

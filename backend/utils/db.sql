@@ -9,6 +9,21 @@ create table users(
 );
 
 create table questions (
-    question_id int primary key auto_increment,
-
+     question_id int primary key auto_increment,
+     question_title varchar(255) not null,
+     question_description varchar(255) not null,
+     question_category varchar(255) not null,
+     question_answer varchar(255) not null,
+     question_points bigint
 );
+
+CREATE TABLE solved_questions (
+    solved_id INT PRIMARY KEY AUTO_INCREMENT,
+    question_id INT,
+    user_id INT,
+    solved_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (question_id) REFERENCES questions(question_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
