@@ -54,13 +54,39 @@ const checkAnswer = (req, res) => {
                     .status(500)
                     .json({ error: "Error getting user score" });
                 }
-                res.status(200).json("Score Updated!");
+
+                const insertSolvedUserQuery =
+                  "INSERT INTO solved_questions (question_id, user_id) SELECT ?, ? WHERE NOT EXISTS (SELECT 1 FROM solved_questions WHERE user_id = ?)";
+
+                connection.query(
+                  insertSolvedUserQuery,
+                  [questionId, userId, userId],
+                  async (err, result) => {
+                    if (err) {
+                      return res
+                        .status(500)
+                        .json({ error: "Error inserting solved user data" });
+                    }
+                    // Check if any rows were affected by the insert
+                    if (result.affectedRows === 0) {
+                      // The user_id already exists in the table
+                      return res
+                        .status(400)
+                        .json({ error: "User already solved this question" });
+                    }
+                    res.status(200).json({
+                      message: "Correct Answer!",
+                    });
+                  }
+                );
               }
             );
           }
         );
       } else {
-        res.status(400).json("Wrong answer!");
+        res.status(400).json({
+          message: "Wrong answer!",
+        });
       }
     }
   );
