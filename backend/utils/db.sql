@@ -6,5 +6,9 @@ create table users(
     user_email varchar(255) not null,
     user_password varchar(255) not null,
     user_score bigint
+);
+
+create table questions (
+    question_id int primary key auto_increment,
 
 );
