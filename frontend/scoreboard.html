@@ -1,0 +1,116 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-time Scoreboard</title>
+  </head>
+  <body>
+    <h1>Real-time Scoreboard</h1>
+    <ul id="scoreboard"></ul>
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+    <script>
+      const socket = io("ws://192.168.0.101:8888");
+
+      // socket.on("message", (text) => {
+      //   const el = document.createElement("li");
+      //   el.innerHTML = text;
+      //   document.querySelector("ul").appendChild(el);
+      // });
+
+      // document.querySelector("button").onclick = () => {
+      //   const text = document.querySelector("input").value;
+      //   socket.emit("message", text);
+      // };
+
+      // Listen for score updates from the server
+      socket.on("scoreUpdate", (scores) => {
+        const scoreboard = document.getElementById("scoreboard");
+        scoreboard.innerHTML = "";
+
+        scores.forEach((score) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = `${score.username}: ${score.score}`;
+          scoreboard.appendChild(listItem);
+        });
+      });
+    </script>
+  </body>
+</html>
+ -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-time Score Tracker</title>
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+    <script>
+      const socket = io("ws://192.168.0.101:8888"); -->
+
+<!-- //   socket.on("scoreUpdate", (scores) => {
+      //     // Display scores on the page
+      //     document.getElementById("scores").innerHTML = JSON.stringify(
+      //       scores,
+      //       null,
+      //       2
+      //     );
+      //   }); -->
+
+<!-- socket.on("scoreUpdate", (text) => {
+        console.log(text);
+        const el = document.createElement("li");
+        el.innerHTML = text;
+        document.querySelector("ul").appendChild(el);
+      });
+
+      function updateScore() {
+        const username = document.getElementById("username").value;
+        const points = parseInt(document.getElementById("points").value);
+
+        // Send score update to the server
+        socket.emit("updateScore", { username, points });
+      } -->
+<!-- </script>
+  </head>
+  <body>
+    <h1>Real-time Score Tracker</h1>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" />
+    </div>
+    <div>
+      <label for="points">Points:</label>
+      <input type="number" id="points" value="0" />
+    </div>
+    <button onclick="updateScore()">Update Score</button>
+    <h2>Scores:</h2>
+    <pre id="scores"></pre>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-time Score Tracker</title>
+  </head>
+  <body>
+    <h1>Real-time Score Tracker</h1>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" />
+    </div>
+    <div>
+      <label for="points">Points:</label>
+      <input type="number" id="points" value="0" />
+    </div>
+    <button onclick="updateScore()">Update Score</button>
+    <h2>Scores:</h2>
+    <ul id="scores"></ul>
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+  </body>
+  <script src="app.js"></script>
+</html>
