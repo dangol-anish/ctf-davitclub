@@ -7,6 +7,6 @@ const {
 } = require("../controllers/dashboard.controller.js");
 
 router.get("/", sendQuestion);
-router.post("/", checkAnswer);
+router.post("/answer", checkAnswer);
 router.post("/", test);
 module.exports = router;

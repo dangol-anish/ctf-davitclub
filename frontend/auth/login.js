@@ -20,8 +20,11 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       console.log(data);
 
       const token = data.token;
+      const userId = data.userId;
 
       localStorage.setItem("aT", token);
+      localStorage.setItem("uid", userId);
+
       window.location.href = "../dashboard/dashboard.html";
     } else {
       console.error("Failed");
