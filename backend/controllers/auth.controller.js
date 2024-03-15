@@ -47,6 +47,7 @@ const signup = async (req, res) => {
     res.status(500).json({ error: "Please enter valid credentials." });
   }
 };
+
 const signin = async (req, res) => {
   try {
     const { userEmail, userPassword } = req.body;
@@ -79,10 +80,10 @@ const signin = async (req, res) => {
           { id: existingUser[0].id },
           process.env.ACCESS_TOKEN
         );
-        const expiryDate = new Date(Date.now() + 8.64e7);
-        res.cookie("aT", aT, { httpOnly: true, expires: expiryDate });
+
         res.json({
           message: "Logged in successfully",
+          token: aT,
         });
       }
     );

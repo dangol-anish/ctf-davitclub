@@ -92,4 +92,10 @@ const checkAnswer = (req, res) => {
   );
 };
 
-module.exports = { sendQuestion, checkAnswer };
+const test = (req, res) => {
+  res.json({
+    message: "Hello",
+  });
+};
+
+module.exports = { sendQuestion, checkAnswer, test };

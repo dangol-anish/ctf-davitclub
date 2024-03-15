@@ -16,11 +16,13 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     });
 
     if (response.status === 200) {
-      console.log("Logged in");
       const data = await response.json();
       console.log(data);
 
-      window.location.href = "dashboard.html";
+      const token = data.token;
+
+      localStorage.setItem("aT", token);
+      window.location.href = "../dashboard/dashboard.html";
     } else {
       console.error("Failed");
     }

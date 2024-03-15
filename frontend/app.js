@@ -1,50 +1,47 @@
 const socket = io("ws://192.168.0.101:8080");
 
 socket.on("scoreUpdate", (text) => {
-  console.log(text);
-  const el = document.createElement("li");
-  el.innerHTML = text;
-  document.querySelector("ul").appendChild(el);
+  const jsonData = JSON.stringify(text);
+
+  const parsedData = JSON.parse(jsonData); // Parse the JSON string back to an object
+
+  parsedData.forEach((score) => {
+    // assuming parsedData is an array
+    console.log(score.user_score);
+    const el = document.createElement("li");
+    el.innerHTML = score.user_score;
+    document.querySelector("ul").appendChild(el);
+  });
 });
 
-document.querySelector("button").onclick = () => {
-  const text = document.querySelector("input").value;
-  socket.emit("scoreUpdate", text);
-};
+socket.on("demoScoreUpdate", (text) => {
+  const jsonData = JSON.stringify(text);
 
-// Regular Websockets
+  const parsedData = JSON.parse(jsonData); // Parse the JSON string back to an object
 
-// const socket = new WebSocket('ws://localhost:8080');
+  parsedData.forEach((score) => {
+    // assuming parsedData is an array
+    console.log(score.user_score);
+    const el = document.createElement("li");
+    el.innerHTML = score.user_score;
+    document.querySelector("ul").appendChild(el);
+  });
+});
 
-// // Listen for messages
-// socket.onmessage = ({ data }) => {
-//     console.log('Message from server ', data);
+// document.querySelector("button").onclick = () => {
+//   const text = document.querySelector("input").value;
+//   socket.emit("scoreUpdate", text);
 // };
 
-// document.querySelector('button').onclick = () => {
-//     socket.send('hello');
-// }
-
-let loginForm = document.getElementById("myForm");
-
-loginForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  let username = document.getElementById("username").value;
-  let password = document.getElementById("password").value;
-
-  const formData = {
-    username,
-    password,
-  };
-
+async function updateScore() {
+  const points = document.getElementById("points").value;
+  console.log(points);
   try {
-    const res = await fetch("192.168.0.101:3000", {
-      method: "POST",
+    const res = await fetch(`http://localhost:8888/update/${points}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
     });
 
     const data = await res.json();
@@ -52,4 +49,4 @@ loginForm.addEventListener("submit", async (e) => {
   } catch (error) {
     console.error("Error:", error);
   }
-});
+}
