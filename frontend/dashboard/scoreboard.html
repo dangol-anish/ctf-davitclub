@@ -3,9 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>User Score Leaderboard</title>
   </head>
   <body>
-    <h1>Scoreboard</h1>
+    <h1>User Score Leaderboards</h1>
+
+    <table id="leaderboard">
+      <thead>
+        <tr>
+          <th class="rank">Rank</th>
+          <th class="username">Username</th>
+          <th class="score">Score</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script>
+      (async () => {
+        const token = localStorage.getItem("aT");
+
+        try {
+          const response = await fetch(
+            "http://localhost:8888/dashboard/scoreboard",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token ? token : "",
+              },
+            }
+          );
+
+          if (response.ok) {
+            const jsonData = await response.json(); // Parsing JSON response
+            var leaderboardTable = document
+              .getElementById("leaderboard")
+              .getElementsByTagName("tbody")[0];
+            jsonData.forEach((item, index) => {
+              var row = leaderboardTable.insertRow(index);
+              var rankCell = row.insertCell(0);
+              var usernameCell = row.insertCell(1);
+              var scoreCell = row.insertCell(2);
+              rankCell.textContent = index + 1;
+              usernameCell.textContent = item.user_name;
+              scoreCell.textContent = item.user_score;
+            });
+          } else {
+            console.error("Failed to fetch leaderboard:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error fetching leaderboard:", error);
+        }
+      })();
+    </script>
   </body>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 60%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      background-color: #fff;
+    }
+
+    th,
+    td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      color: #333;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    .rank {
+      width: 10%;
+    }
+
+    .username {
+      width: 50%;
+    }
+
+    .score {
+      width: 40%;
+    }
+  </style>
 </html>

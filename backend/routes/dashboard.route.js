@@ -3,10 +3,10 @@ const router = express.Router();
 const {
   sendQuestion,
   checkAnswer,
-  test,
+  scoreboard,
 } = require("../controllers/dashboard.controller.js");
 
 router.get("/", sendQuestion);
 router.post("/answer", checkAnswer);
-router.post("/", test);
+router.get("/scoreboard", scoreboard);
 module.exports = router;

@@ -108,10 +108,18 @@ const checkAnswer = (req, res) => {
 //   );
 // };
 
-const test = (req, res) => {
-  res.json({
-    message: "Hello",
+const scoreboard = (req, res) => {
+  const currentScoreQuery =
+    "SELECT user_name, user_score FROM users ORDER BY user_score DESC LIMIT 10";
+  connection.query(currentScoreQuery, (err, result) => {
+    if (err) {
+      console.log("Error fetching scores:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    console.log("Scores fetched:", result);
+    res.json(result);
   });
 };
 
-module.exports = { sendQuestion, checkAnswer, test };
+module.exports = { sendQuestion, checkAnswer, scoreboard };
