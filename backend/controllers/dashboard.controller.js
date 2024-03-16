@@ -1,6 +1,8 @@
 require("dotenv").config();
 const connection = require("../utils/dbConnection");
 
+var userScoreValue;
+
 const sendQuestion = (req, res) => {
   const getAllQuestionsQuery = "select * from questions";
 
@@ -61,9 +63,10 @@ const checkAnswer = (req, res) => {
           // Check if any rows were affected by the insert
           if (result && result.length > 0) {
             // The user_id already exists in the table
-            return res
-              .status(400)
-              .json({ message: "You have already solved this question!" });
+            return res.status(400).json({
+              message: "You have already solved this question!",
+              userScore: userScoreValue,
+            });
           } else {
             const insertSolvedUser =
               "insert into solved_questions (question_id, user_id) values (?, ?)";
@@ -123,9 +126,25 @@ const checkAnswer = (req, res) => {
         }
       );
     } else {
-      res.json({
-        message: "Wrong Answer",
-      });
+      const getUserScoreQuery = "select user_score from users where user_id=?";
+      connection.query(
+        getUserScoreQuery,
+        [userId],
+        async (err, currentUserScore) => {
+          if (err) {
+            return res.status(500).json({ error: "Error getting user score" });
+          }
+          const jsonData = JSON.stringify(currentUserScore);
+
+          const parsedData = JSON.parse(jsonData);
+
+          const userScoreValue = parsedData[0].user_score;
+          res.json({
+            message: "Wrong Answer",
+            userScore: userScoreValue,
+          });
+        }
+      );
     }
   });
 };

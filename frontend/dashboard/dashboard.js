@@ -1,3 +1,4 @@
+// get questions
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const token = localStorage.getItem("aT");
@@ -12,9 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      // console.log(data);
 
-      // Add event listeners to challenge divs
       for (let i = 1; i <= 30; i++) {
         const challengeDiv = document.getElementById(`question-${i}`);
         if (challengeDiv) {
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (question) {
               populateModal(question);
               showModal();
-              resetForm(question.question_id); // Reset the form with the question ID
+              resetForm(question.question_id);
             } else {
               console.error("Question not found");
             }
@@ -31,17 +30,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       }
     } else {
-      console.error("Failed to fetch dashboard data");
+      window.location.href = "../auth/login.html";
+      return;
     }
   } catch (error) {
     console.error("Error:", error);
   }
 });
 
+// get user details
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const uid = localStorage.getItem("uid");
     const token = localStorage.getItem("aT");
+
+    if (!uid || !token) {
+      // Redirect to login page if either uid or token is missing
+      window.location.href = "../auth/login.html";
+      return;
+    }
 
     const response = await fetch("http://localhost:8888/dashboard", {
       method: "POST",
@@ -54,7 +61,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      // console.log(data);
 
       const userName = document.getElementById("user_id");
       const userScore = document.getElementById("user_score");
@@ -62,7 +68,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       userName.innerText += " " + data[0].user_name;
       userScore.innerText += " " + data[0].user_score;
     } else {
-      // Handle other response statuses if needed
       console.error("Error:", response.statusText);
     }
   } catch (error) {
@@ -70,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+// populate divs with questions
 function populateModal(question) {
   document.getElementById("modal-title").innerText = question.question_title;
   document.getElementById("modal-description").innerText =
@@ -98,10 +104,11 @@ function showModal() {
   };
 }
 
+// reset form when it is closed so that the previous answers are not sent to future response
 function resetForm(questionId) {
   const answerForm = document.getElementById("answer-form");
-  answerForm.reset(); // Reset the form
-  answerForm.setAttribute("data-question-id", questionId); // Set the question ID in the form's data attribute
+  answerForm.reset();
+  answerForm.setAttribute("data-question-id", questionId);
 }
 
 // Add an event listener for form submission
@@ -141,7 +148,7 @@ document
         alert(result.message);
         // Update user score on correct answer
         const userScore = document.getElementById("user_score");
-        userScore.innerText = "Score: " + result.userScore; // Assuming the backend sends the updated score
+        userScore.innerText = "User Score: " + result.userScore;
       } else {
         const error = await response.json();
         alert(error.message);
@@ -150,3 +157,18 @@ document
       console.error("Error:", error);
     }
   });
+
+//logout
+document.addEventListener("DOMContentLoaded", function () {
+  const logoutLink = document.getElementById("logout");
+
+  logoutLink.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    // Clear local storage items
+    localStorage.clear("aT");
+    localStorage.clear("uid");
+
+    window.location.href = "../auth/login.html"; // Replace "login.html" with the actual login page URL
+  });
+});
