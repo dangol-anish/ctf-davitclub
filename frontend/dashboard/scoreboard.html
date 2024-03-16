@@ -35,7 +35,9 @@
           );
 
           if (response.ok) {
-            const jsonData = await response.json(); // Parsing JSON response
+            const jsonData = await response.json();
+
+            console.log(jsonData); // Parsing JSON response
             var leaderboardTable = document
               .getElementById("leaderboard")
               .getElementsByTagName("tbody")[0];

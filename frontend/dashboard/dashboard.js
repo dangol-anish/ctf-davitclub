@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       // Add event listeners to challenge divs
       for (let i = 1; i <= 30; i++) {
@@ -32,6 +32,38 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } else {
       console.error("Failed to fetch dashboard data");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const uid = localStorage.getItem("uid");
+    const token = localStorage.getItem("aT");
+
+    const response = await fetch("http://localhost:8888/dashboard", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? token : "",
+      },
+      body: JSON.stringify({ uid }),
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      // console.log(data);
+
+      const userName = document.getElementById("user_id");
+      const userScore = document.getElementById("user_score");
+
+      userName.innerText += " " + data[0].user_name;
+      userScore.innerText += " " + data[0].user_score;
+    } else {
+      // Handle other response statuses if needed
+      console.error("Error:", response.statusText);
     }
   } catch (error) {
     console.error("Error:", error);
@@ -81,7 +113,7 @@ document
     const questionId = document
       .getElementById("answer-form")
       .getAttribute("data-question-id");
-    const userId = localStorage.getItem("uid"); // Implement a function to get user ID
+    const userId = localStorage.getItem("uid");
     const requestBody = {
       questionId: questionId,
       userId: userId,
@@ -106,10 +138,13 @@ document
 
       if (response.status === 200) {
         const result = await response.json();
-        alert(result.message); // Display success message
+        alert(result.message);
+        // Update user score on correct answer
+        const userScore = document.getElementById("user_score");
+        userScore.innerText = "Score: " + result.userScore; // Assuming the backend sends the updated score
       } else {
         const error = await response.json();
-        alert(error.message); // Display error message
+        alert(error.message);
       }
     } catch (error) {
       console.error("Error:", error);

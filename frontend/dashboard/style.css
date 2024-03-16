@@ -46,11 +46,13 @@ h2 {
   height: 20vh;
   background-color: slategrey;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
   font-size: 28px;
   font-weight: 700;
+  gap: 20px;
 }
 
 .challenge {
@@ -72,6 +74,15 @@ h2 {
   width: 100%;
   justify-content: space-around;
   gap: 50px;
+}
+
+.challenge-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+
+  font-weight: 700;
 }
 
 /* modal */
