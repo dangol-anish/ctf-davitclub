@@ -67,6 +67,11 @@ h2 {
   gap: 5px;
   font-size: 18px;
   color: white;
+  cursor: pointer;
+}
+
+.challenge:hover {
+  opacity: 0.9;
 }
 
 .box {

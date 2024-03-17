@@ -22,7 +22,7 @@ const signup = async (req, res) => {
         }
 
         if (existingUser.length > 0) {
-          return res.status(400).json({ error: "Email already exists." });
+          return res.status(400).json({ message: "Email already exists." });
         }
 
         const insertUserQuery = `INSERT INTO users (user_name, user_email, user_password) VALUES (?, ?, ?)`;
