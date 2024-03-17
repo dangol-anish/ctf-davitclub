@@ -14,18 +14,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (response.status === 200) {
       const data = await response.json();
 
-      for (let i = 1; i <= 30; i++) {
-        const challengeDiv = document.getElementById(`question-${i}`);
+      for (const question of data) {
+        const challengeDiv = document.getElementById(
+          `question-${question.question_id}`
+        );
         if (challengeDiv) {
           challengeDiv.addEventListener("click", () => {
-            const question = data.find((q) => q.question_id === i);
-            if (question) {
-              populateModal(question);
-              showModal();
-              resetForm(question.question_id);
-            } else {
-              console.error("Question not found");
-            }
+            populateModal(question);
+            showModal();
+            resetForm(question.question_id);
+            displaySolvedBy(question.solved_by); // New line to display users who solved the question
           });
         }
       }
@@ -37,6 +35,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error:", error);
   }
 });
+
+// Function to display users who solved the question
+function displaySolvedBy(users) {
+  const solvedByContainer = document.getElementById("solved-by-container");
+  solvedByContainer.innerHTML = ""; // Clear previous content
+
+  const usersList = users.split(", ");
+  for (const user of usersList) {
+    const userElement = document.createElement("div");
+    userElement.textContent = user;
+    solvedByContainer.appendChild(userElement);
+  }
+}
 
 // get user details
 document.addEventListener("DOMContentLoaded", async () => {
@@ -94,12 +105,14 @@ function showModal() {
   const closeButton = document.getElementsByClassName("close")[0];
   closeButton.onclick = function () {
     modal.style.display = "none";
+    switchPage(null, 1);
   };
 
   // Close the modal when clicking anywhere outside of it
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
+      switchPage(null, 1);
     }
   };
 }
@@ -172,3 +185,19 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "../auth/login.html"; // Replace "login.html" with the actual login page URL
   });
 });
+
+//page switch
+function switchPage(event, page) {
+  // event.stopPropagation(); // Prevent the default behavior of the click event
+  if (page === 1) {
+    document.getElementById("page1Content").style.display = "block";
+    document.getElementById("page2Content").style.display = "none";
+    // Show buttons on page 1
+    // document.getElementById("page1Buttons").style.display = "block";
+  } else if (page === 2) {
+    document.getElementById("page1Content").style.display = "none";
+    document.getElementById("page2Content").style.display = "block";
+    // Hide buttons on page 2
+    // document.getElementById("page1Buttons").style.display = "none";
+  }
+}

@@ -87,15 +87,37 @@
     <div id="modal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h2 id="modal-title"></h2>
-        <p id="modal-description"></p>
-        <p id="modal-category"></p>
-        <p id="modal-points"></p>
-        <form id="answer-form">
-          <label for="answer">Your Answer:</label>
-          <input type="text" id="answer" name="answer" />
-          <button type="submit">Submit</button>
-        </form>
+        <div>
+          <span
+            class="d-inline-block"
+            style="cursor: pointer"
+            onclick="switchPage(event, 1)"
+            >Page 1</span
+          >
+          <span
+            class="d-inline-block"
+            style="cursor: pointer"
+            onclick="switchPage(event, 2)"
+            >Page 2</span
+          >
+        </div>
+        <div id="page1Content">
+          <h2 id="modal-title"></h2>
+          <p id="modal-description"></p>
+          <p id="modal-category"></p>
+          <p id="modal-points"></p>
+          <form id="answer-form">
+            <label for="answer">Your Answer:</label>
+            <input type="text" id="answer" name="answer" />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div id="page2Content" style="display: none">
+          <div>
+            <h2>Solved by:</h2>
+            <div id="solved-by-container"></div>
+          </div>
+        </div>
       </div>
     </div>
   </body>

@@ -4,7 +4,12 @@ const connection = require("../utils/dbConnection");
 var userScoreValue;
 
 const sendQuestion = (req, res) => {
-  const getAllQuestionsQuery = "select * from questions";
+  const getAllQuestionsQuery = `
+    SELECT q.*, GROUP_CONCAT(u.user_name) AS solved_by
+    FROM questions q
+    LEFT JOIN solved_questions sq ON q.question_id = sq.question_id
+    LEFT JOIN users u ON sq.user_id = u.user_id
+    GROUP BY q.question_id`;
 
   connection.query(getAllQuestionsQuery, async (err, getAllQuestionResult) => {
     if (err) {
