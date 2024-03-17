@@ -11,7 +11,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   };
 
   try {
-    const response = await fetch("http://localhost:8888/auth/sign-in", {
+    const response = await fetch("http://192.168.0.101:8888/auth/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
