@@ -1,3 +1,24 @@
+// fetch attempts
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    // Check if the data is already stored in localStorage
+    const userId = localStorage.getItem("uid");
+    if (!localStorage.getItem(userId)) {
+      fetch("json/attempts.json")
+        .then((response) => response.json())
+        .then((jsonData) => {
+          console.log(jsonData);
+          const jsonString = JSON.stringify(jsonData);
+          const uid = localStorage.getItem("uid");
+          localStorage.setItem(uid, jsonString);
+        });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // get questions
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -159,12 +180,51 @@ document
       if (response.status === 200) {
         const result = await response.json();
         alert(result.message);
+        document
+          .getElementById(`question-${questionId}`)
+          .classList.add("correct");
+
+        console.log("question id" + questionId);
         // Update user score on correct answer
         const userScore = document.getElementById("user_score");
         userScore.innerText = "User Score: " + result.userScore;
       } else {
         const error = await response.json();
         alert(error.message);
+
+        if (error.message === "Wrong Answer") {
+          const userId = localStorage.getItem("uid");
+          const jsonData = JSON.parse(localStorage.getItem(userId));
+          const questionIdParsed = parseInt(questionId);
+
+          // Find the object corresponding to the question ID
+          const questionObject = jsonData.find(
+            (obj) => obj.question_id === questionIdParsed
+          );
+
+          console.log(questionObject.attempts);
+
+          console.log(document.getElementById(`question-${questionIdParsed}`));
+
+          if (questionObject) {
+            // Update the attempts count for that question
+            questionObject.attempts -= 1;
+
+            if (questionObject.attempts <= 0) {
+              window.location.href = "dashboard.html";
+              const questionDiv = document.getElementById(
+                `question-${questionIdParsed}`
+              );
+              // if (questionDiv) {
+              //   questionDiv.style.display = "none";
+              // }
+            }
+            // Save the updated JSON data back to localStorage
+            localStorage.setItem(userId, JSON.stringify(jsonData));
+          }
+          // localStorage.setItem("qT", retrievedArray[qId - 1].attempts - 1);
+        }
+        // console.log(error.message);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -179,8 +239,8 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
 
     // Clear local storage items
-    localStorage.clear("aT");
-    localStorage.clear("uid");
+    localStorage.removeItem("aT");
+    localStorage.removeItem("uid");
 
     window.location.href = "../auth/login.html"; // Replace "login.html" with the actual login page URL
   });
@@ -199,5 +259,39 @@ function switchPage(event, page) {
     document.getElementById("page2Content").style.display = "block";
     // Hide buttons on page 2
     // document.getElementById("page1Buttons").style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    // Check attempts for each question from localStorage and hide corresponding divs if attempts are 0 or less
+    checkAttemptsAndHideDivs();
+
+    // Your existing code for fetching questions and user details goes here...
+  } catch (error) {
+    console.error("Error:", error);
+  }
+});
+
+function checkAttemptsAndHideDivs() {
+  try {
+    const userId = localStorage.getItem("uid");
+    const jsonData = JSON.parse(localStorage.getItem(userId));
+
+    if (jsonData) {
+      jsonData.forEach((question) => {
+        const questionId = question.question_id;
+        const attempts = question.attempts;
+
+        if (attempts <= 0) {
+          const questionDiv = document.getElementById(`question-${questionId}`);
+          if (questionDiv) {
+            questionDiv.classList.add("disabled");
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.error("Error checking attempts:", error);
   }
 }

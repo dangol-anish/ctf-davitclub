@@ -11,4 +11,5 @@ router.get("/", sendQuestion);
 router.post("/", userData);
 router.post("/answer", checkAnswer);
 router.get("/scoreboard", scoreboard);
+
 module.exports = router;

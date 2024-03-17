@@ -117,7 +117,7 @@ const checkAnswer = (req, res) => {
                             .json({ error: "Error getting user score" });
                         }
 
-                        res.json({
+                        res.status(200).json({
                           message: "Correct Answer",
                           userScore: userScoreValue,
                         });
@@ -144,7 +144,7 @@ const checkAnswer = (req, res) => {
           const parsedData = JSON.parse(jsonData);
 
           const userScoreValue = parsedData[0].user_score;
-          res.json({
+          return res.status(400).json({
             message: "Wrong Answer",
             userScore: userScoreValue,
           });
@@ -168,4 +168,33 @@ const scoreboard = (req, res) => {
   });
 };
 
-module.exports = { sendQuestion, checkAnswer, scoreboard, userData };
+// let solvedQuestionIds = [];
+// const solvedQuestions = (req, res) => {
+//   const { userId } = req.body;
+//   const checkSolvedQuery =
+//     "SELECT question_id FROM solved_questions WHERE user_id = ? ";
+//   connection.query(checkSolvedQuery, [userId], async (err, result) => {
+//     if (err) {
+//       return res
+//         .status(500)
+//         .json({ error: "Error inserting solved user data" });
+//     }
+//     // Check if any rows were affected by the insert
+//     if (result && result.length > 0) {
+//       // The user_id already exists in the table
+//       return res.status(400).json({
+//         message: "You have already solved this question!",
+//         userScore: userScoreValue,
+//         solvedQuestionIds: solvedQuestionIds, // Send the array of solved question IDs
+//       });
+//     }
+//   });
+// };
+
+module.exports = {
+  sendQuestion,
+  checkAnswer,
+  scoreboard,
+  userData,
+  // solvedQuestions,
+};

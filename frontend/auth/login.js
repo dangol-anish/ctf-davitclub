@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  localStorage.clear("aT");
-  localStorage.clear("uid");
+  localStorage.removeItem("aT");
+  localStorage.removeItem("uid");
 });
 
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
