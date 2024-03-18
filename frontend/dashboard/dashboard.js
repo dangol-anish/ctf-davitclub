@@ -62,10 +62,10 @@ function displaySolvedBy(users) {
   const solvedByContainer = document.getElementById("solved-by-container");
   solvedByContainer.innerHTML = ""; // Clear previous content
 
-  const usersList = users.split(", ");
+  const usersList = users.split(",").map((user) => user.trim());
   for (const user of usersList) {
-    const userElement = document.createElement("div");
-    userElement.textContent = user;
+    const userElement = document.createElement("li");
+    userElement.textContent = "~  " + user;
     solvedByContainer.appendChild(userElement);
   }
 }
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       const userName = document.getElementById("user_id");
       const userScore = document.getElementById("user_score");
@@ -312,9 +312,9 @@ function checkAttemptsAndHideDivs() {
 
 // bringing header
 
-fetch("header.html")
-  .then((response) => response.text())
-  .then((html) => {
-    document.getElementById("header-container").innerHTML = html;
-  })
-  .catch((error) => console.error("Error fetching header:", error));
+// fetch("header.html")
+//   .then((response) => response.text())
+//   .then((html) => {
+//     document.getElementById("header-container").innerHTML = html;
+//   })
+//   .catch((error) => console.error("Error fetching header:", error));

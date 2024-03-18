@@ -198,6 +198,7 @@ footer {
   border: 1px solid var(--background);
   border-radius: 5px;
   padding: 5px 10px;
+  font-size: 18px;
 }
 
 .modal-page:active {
@@ -207,4 +208,35 @@ footer {
 
 .moda-title {
   padding: 0;
+}
+
+#page1Content,
+#page2Content {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 18px;
+}
+
+input {
+  padding: 5px 10px;
+  border-radius: 10px;
+  height: 40px;
+  font-size: 18px;
+}
+
+button {
+  width: 100px;
+  background-color: var(--background);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 5px 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+button:active {
+  opacity: 75%;
 }
