@@ -80,10 +80,8 @@ app.put("/update/:points", (req, res) => {
   });
 });
 
-const ip = process.env.IP;
-
-app.listen(process.env.SERVER_PORT, `${ip}`, () => {
+app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server running on port ${process.env.SERVER_PORT}`);
 });
 
-http.listen(8080, () => console.log("listening on 192.168.0.123:8080"));
+http.listen(8080, () => console.log("listening "));
