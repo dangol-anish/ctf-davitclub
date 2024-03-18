@@ -93,12 +93,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.status === 200) {
       const data = await response.json();
+      console.log(data);
 
       const userName = document.getElementById("user_id");
       const userScore = document.getElementById("user_score");
 
       userName.innerText += " " + data[0].user_name;
       userScore.innerText += " " + data[0].user_score;
+
+      // Get all solved question IDs
+      const solvedQuestionIds = data.map((entry) => entry.question_id);
+
+      // Loop through divs with question IDs and color them green if solved
+      const challengeDivs = document.querySelectorAll(".challenge");
+      challengeDivs.forEach((div) => {
+        const questionId = parseInt(div.id.split("-")[1]);
+        if (solvedQuestionIds.includes(questionId)) {
+          div.style.backgroundColor = "#0B6623";
+        }
+      });
     } else {
       console.error("Error:", response.statusText);
     }
@@ -180,9 +193,9 @@ document
       if (response.status === 200) {
         const result = await response.json();
         alert(result.message);
-        document
-          .getElementById(`question-${questionId}`)
-          .classList.add("correct");
+        // document
+        //   .getElementById(`question-${questionId}`)
+        //   .classList.add("correct");
 
         console.log("question id" + questionId);
         // Update user score on correct answer

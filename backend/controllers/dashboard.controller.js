@@ -23,7 +23,10 @@ const userData = (req, res) => {
   const { uid } = req.body;
   console.log(uid);
   const getUserData =
-    "select user_name, user_score from users where user_id = ?";
+    "SELECT u.user_name, u.user_score, sq.question_id " +
+    "FROM users u " +
+    "LEFT JOIN solved_questions sq ON u.user_id = sq.user_id " +
+    "WHERE u.user_id = ?";
   connection.query(getUserData, [uid], async (err, getUserDataResult) => {
     if (err) {
       return res.status(500).json({ error: "Error while fetching questions." });
@@ -167,29 +170,6 @@ const scoreboard = (req, res) => {
     res.json(result);
   });
 };
-
-// let solvedQuestionIds = [];
-// const solvedQuestions = (req, res) => {
-//   const { userId } = req.body;
-//   const checkSolvedQuery =
-//     "SELECT question_id FROM solved_questions WHERE user_id = ? ";
-//   connection.query(checkSolvedQuery, [userId], async (err, result) => {
-//     if (err) {
-//       return res
-//         .status(500)
-//         .json({ error: "Error inserting solved user data" });
-//     }
-//     // Check if any rows were affected by the insert
-//     if (result && result.length > 0) {
-//       // The user_id already exists in the table
-//       return res.status(400).json({
-//         message: "You have already solved this question!",
-//         userScore: userScoreValue,
-//         solvedQuestionIds: solvedQuestionIds, // Send the array of solved question IDs
-//       });
-//     }
-//   });
-// };
 
 module.exports = {
   sendQuestion,
