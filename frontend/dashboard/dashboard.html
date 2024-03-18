@@ -7,21 +7,22 @@
     <title>Document</title>
   </head>
   <body>
-    <header>
-      <img src="../assets/logo-dm.svg" alt="COGNITO DAVITCLUB" />
-      <nav>
-        <ul>
-          <li><a href="dashboard.html">Challenges</a></li>
-          <li><a href="scoreboard.html">Scoreboard</a></li>
-          <li><a id="logout" href="#">Logout</a></li>
-        </ul>
-      </nav>
-    </header>
+       <header>
+  <img src="../assets/logo-dm.svg" alt="COGNITO DAVITCLUB" />
+  <nav>
+    <ul>
+      <li><a href="dashboard.html">Challenges</a></li>
+      <li><a href="scoreboard.html">Scoreboard</a></li>
+      <li><a id="logout" href="#">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+
     <section class="section-challenge">
       <p id="user_id">Username:</p>
       <p id="user_score">User Score:</p>
     </section>
-    <section class="challenge-heading">Challenges</section>
+ 
 
     <section class="section-challenge-one">
       <h2>MCQs</h2>
@@ -86,23 +87,27 @@
 
     <div id="modal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <div>
+<span class="close">&times;</span>
+        </div>
+        
+
         <div>
           <span
-            class="d-inline-block"
+            class="modal-page"
             style="cursor: pointer"
             onclick="switchPage(event, 1)"
-            >Page 1</span
+            >Question</span
           >
           <span
-            class="d-inline-block"
+            class="modal-page"
             style="cursor: pointer"
             onclick="switchPage(event, 2)"
-            >Page 2</span
+            >Solved By</span
           >
         </div>
         <div id="page1Content">
-          <h2 id="modal-title"></h2>
+          <h3 id="modal-title"></h2>
           <p id="modal-description"></p>
           <p id="modal-category"></p>
           <p id="modal-points"></p>
@@ -114,7 +119,7 @@
         </div>
         <div id="page2Content" style="display: none">
           <div>
-            <h2>Solved by:</h2>
+            <h3>Solved by:</h2>
             <div id="solved-by-container"></div>
           </div>
         </div>

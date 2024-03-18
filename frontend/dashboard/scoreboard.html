@@ -4,9 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Score Leaderboard</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>User Score Leaderboards</h1>
+    <header>
+      <img src="../assets/logo-dm.svg" alt="COGNITO DAVITCLUB" />
+      <nav>
+        <ul>
+          <li><a href="dashboard.html">Challenges</a></li>
+          <li><a href="scoreboard.html">Scoreboard</a></li>
+          <li><a id="logout" href="#">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <h1 class="challenge-heading margin">Score Leaderboard</h1>
 
     <table id="leaderboard">
       <thead>
@@ -18,97 +30,7 @@
       </thead>
       <tbody></tbody>
     </table>
-    <script>
-      (async () => {
-        const token = localStorage.getItem("aT");
 
-        try {
-          const response = await fetch(
-            "http://localhost:8888/dashboard/scoreboard",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: token ? token : "",
-              },
-            }
-          );
-
-          if (response.ok) {
-            const jsonData = await response.json();
-
-            console.log(jsonData); // Parsing JSON response
-            var leaderboardTable = document
-              .getElementById("leaderboard")
-              .getElementsByTagName("tbody")[0];
-            jsonData.forEach((item, index) => {
-              var row = leaderboardTable.insertRow(index);
-              var rankCell = row.insertCell(0);
-              var usernameCell = row.insertCell(1);
-              var scoreCell = row.insertCell(2);
-              rankCell.textContent = index + 1;
-              usernameCell.textContent = item.user_name;
-              scoreCell.textContent = item.user_score;
-            });
-          } else {
-            console.error("Failed to fetch leaderboard:", response.statusText);
-          }
-        } catch (error) {
-          console.error("Error fetching leaderboard:", error);
-        }
-      })();
-    </script>
+    <script src="scoreboard.js"></script>
   </body>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-
-    table {
-      width: 60%;
-      margin: 20px auto;
-      border-collapse: collapse;
-      border: 1px solid #ddd;
-      background-color: #fff;
-    }
-
-    th,
-    td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #f2f2f2;
-      color: #333;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    tr:hover {
-      background-color: #f2f2f2;
-    }
-
-    .rank {
-      width: 10%;
-    }
-
-    .username {
-      width: 50%;
-    }
-
-    .score {
-      width: 40%;
-    }
-  </style>
 </html>

@@ -115,9 +115,16 @@ h2 {
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;
-  padding: 20px;
+  padding: 50px;
   border: 1px solid #888;
   width: 40%;
+  border-radius: 10px;
+}
+
+.page1Content {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
 }
 
 .close {
@@ -150,4 +157,54 @@ footer {
   place-content: center;
   color: white;
   margin-top: 40px;
+}
+
+/* table */
+
+#leaderboard {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+#leaderboard th,
+#leaderboard td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+#leaderboard th {
+  background-color: var(--background);
+  color: white;
+  font-weight: bold;
+}
+
+#leaderboard tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#leaderboard tr:hover {
+  background-color: #ddd;
+}
+
+.margin {
+  margin-top: 20px;
+}
+
+/* modal */
+
+.modal-page {
+  border: 1px solid var(--background);
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.modal-page:active {
+  background-color: var(--background);
+  color: white;
+}
+
+.moda-title {
+  padding: 0;
 }

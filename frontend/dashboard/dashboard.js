@@ -193,6 +193,7 @@ document
       if (response.status === 200) {
         const result = await response.json();
         alert(result.message);
+        window.location.href = "dashboard.html";
         // document
         //   .getElementById(`question-${questionId}`)
         //   .classList.add("correct");
@@ -308,3 +309,12 @@ function checkAttemptsAndHideDivs() {
     console.error("Error checking attempts:", error);
   }
 }
+
+// bringing header
+
+fetch("header.html")
+  .then((response) => response.text())
+  .then((html) => {
+    document.getElementById("header-container").innerHTML = html;
+  })
+  .catch((error) => console.error("Error fetching header:", error));
