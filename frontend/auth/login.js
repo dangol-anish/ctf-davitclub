@@ -22,7 +22,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
+      console.log(data.message);
 
       const token = data.token;
       const userId = data.userId;
@@ -32,7 +32,8 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
       window.location.href = "../dashboard/dashboard.html";
     } else {
-      console.error("Failed");
+      const data = await response.json();
+      alert(data.message);
     }
   } catch (error) {
     console.error("Error:", error);

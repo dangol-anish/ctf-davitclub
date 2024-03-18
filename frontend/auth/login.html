@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
@@ -17,12 +17,19 @@
         </ul>
       </nav>
     </header>
-    <form action="" method="post" id="loginForm">
-      email: <input type="email" name="email" id="email" /> password:
-      <input type="password" name="password" id="password" />
-      <button type="submit">Submit</button>
-      <a href="register.html">Register</a>
-    </form>
+    <main>
+      <form action="" method="post" id="loginForm">
+        <h2>Login</h2>
+        Email <input type="email" name="email" id="email" required />Password
+        <input type="password" name="password" id="password" required />
+        <button type="submit">Submit</button>
+        <p>
+          Dont' have an account?
+          <a class="link" href="register.html">Register</a>
+        </p>
+      </form>
+    </main>
+
     <script src="login.js"></script>
   </body>
 </html>

@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       challengeDivs.forEach((div) => {
         const questionId = parseInt(div.id.split("-")[1]);
         if (solvedQuestionIds.includes(questionId)) {
-          div.style.backgroundColor = "#0B6623";
+          div.style.backgroundColor = "#32de84";
         }
       });
     } else {

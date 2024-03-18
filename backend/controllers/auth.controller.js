@@ -61,10 +61,10 @@ const signin = async (req, res) => {
         if (err) {
           return res
             .status(500)
-            .json({ error: "You don't have an existing account" });
+            .json({ message: "You don't have an existing account" });
         }
         if (existingUser.length === 0) {
-          return res.status(404).json({ error: "Invalid Credentials" });
+          return res.status(404).json({ message: "Invalid Credentials" });
         }
 
         const validPassword = bcryptjs.compareSync(
@@ -73,7 +73,7 @@ const signin = async (req, res) => {
         );
 
         if (!validPassword) {
-          return res.status(401).json({ error: "Invalid Credentials" });
+          return res.status(401).json({ message: "Invalid Credentials" });
         }
 
         const aT = jwt.sign(
