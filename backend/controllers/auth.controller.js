@@ -22,7 +22,7 @@ const signup = async (req, res) => {
         }
 
         if (existingUser.length > 0) {
-          return res.status(400).json({ error: "Email already exists." });
+          return res.status(400).json({ message: "Email already exists." });
         }
 
         const insertUserQuery = `INSERT INTO users (user_name, user_email, user_password) VALUES (?, ?, ?)`;
@@ -47,6 +47,7 @@ const signup = async (req, res) => {
     res.status(500).json({ error: "Please enter valid credentials." });
   }
 };
+
 const signin = async (req, res) => {
   try {
     const { userEmail, userPassword } = req.body;
@@ -60,10 +61,10 @@ const signin = async (req, res) => {
         if (err) {
           return res
             .status(500)
-            .json({ error: "You don't have an existing account" });
+            .json({ message: "You don't have an existing account" });
         }
         if (existingUser.length === 0) {
-          return res.status(404).json({ error: "Invalid Credentials" });
+          return res.status(404).json({ message: "Invalid Credentials" });
         }
 
         const validPassword = bcryptjs.compareSync(
@@ -72,17 +73,18 @@ const signin = async (req, res) => {
         );
 
         if (!validPassword) {
-          return res.status(401).json({ error: "Invalid Credentials" });
+          return res.status(401).json({ message: "Invalid Credentials" });
         }
 
         const aT = jwt.sign(
           { id: existingUser[0].id },
           process.env.ACCESS_TOKEN
         );
-        const expiryDate = new Date(Date.now() + 8.64e7);
-        res.cookie("aT", aT, { httpOnly: true, expires: expiryDate });
+
         res.json({
           message: "Logged in successfully",
+          token: aT,
+          userId: existingUser[0].user_id,
         });
       }
     );
