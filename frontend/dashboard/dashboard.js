@@ -1,4 +1,5 @@
 // fetch attempts
+var ip = "192.168.0.101";
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const token = localStorage.getItem("aT");
 
-    const response = await fetch("http://localhost:8888/dashboard", {
+    const response = await fetch(`http://${ip}:8888/dashboard`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const response = await fetch("http://localhost:8888/dashboard", {
+    const response = await fetch(`http://${ip}:8888/dashboard`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -179,7 +180,7 @@ document
     const token = localStorage.getItem("aT");
 
     try {
-      const response = await fetch("http://localhost:8888/dashboard/answer", {
+      const response = await fetch(`http://${ip}:8888/dashboard/answer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

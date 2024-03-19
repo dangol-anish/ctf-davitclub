@@ -1,3 +1,4 @@
+var ip = "192.168.0.101";
 fetch("header.html")
   .then((response) => response.text())
   .then((html) => {
@@ -9,7 +10,7 @@ fetch("header.html")
   const token = localStorage.getItem("aT");
 
   try {
-    const response = await fetch("http://localhost:8888/dashboard/scoreboard", {
+    const response = await fetch(`http://${ip}:8888/dashboard/scoreboard`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

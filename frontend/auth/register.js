@@ -1,3 +1,5 @@
+var ip = "192.168.0.101";
+
 document
   .getElementById("registerForm")
   .addEventListener("submit", async (e) => {
@@ -11,7 +13,7 @@ document
     console.log(form);
 
     try {
-      const response = await fetch("http://localhost:8888/auth/sign-up", {
+      const response = await fetch(`http://${ip}:8888/auth/sign-up`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
